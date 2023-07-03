@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +19,24 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Normal Users Routes List
+Route::middleware(['auth', 'user-access:0'])->group(function () {
+
+});
+
+//Admin Routes List
+Route::middleware(['auth', 'user-access:1'])->group(function () {
+    Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
+});
+
+//Admin Routes List
+Route::middleware(['auth', 'user-access:2'])->group(function () {
+    Route::get('/manager/home', [HomeController::class, 'managerHome'])->name('manager.home');
+});
+
+
+/* PDF ROUTES */
+Route::get('/pdf', [App\Http\Controllers\PdfController::class, 'index'])->name('pdf');
+Route::post('/pdf', [App\Http\Controllers\PdfController::class, 'extractData'])->name('extract');
