@@ -12,6 +12,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css">
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -49,7 +50,7 @@
                                         <a class="nav-link" href="">{{ __('Solicitações') }}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="">{{ __('Usuários') }}</a>
+                                        <a class="nav-link" href="{{ route('admin.users') }}">{{ __('Usuários') }}</a>
                                     </li>
                                 @endif
 

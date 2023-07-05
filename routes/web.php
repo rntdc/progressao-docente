@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\UsersController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +31,8 @@ Route::middleware(['auth', 'user-access:0'])->group(function () {
 //Admin Routes List
 Route::middleware(['auth', 'user-access:1'])->group(function () {
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
+    Route::get('/admin/users', [UsersController::class, 'listUsers'])->name('admin.users');
+
 });
 
 //Admin Routes List
