@@ -23,7 +23,7 @@
                         Professores
                     </div>
                     <div class="col-sm-4 d-flex justify-content-sm-end justify-content-center mt-2 mt-sm-0">
-                        <button class="btn btn-outline-secondary"><i class="bi bi-plus"></i> Adicionar Professor</button>
+                        <a href="{{ url(route('admin.professors.create')) }}"><button class="btn btn-outline-secondary"><i class="bi bi-plus"></i> Adicionar Professor</button></a>
                     </div>
                 </div>
             </div>

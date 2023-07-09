@@ -51,7 +51,7 @@
                                         <a class="nav-link" href="">{{ __('Solicitações') }}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('admin.users') }}">{{ __('Usuários') }}</a>
+                                        <a class="nav-link" href="{{ route('admin.professors.index') }}">{{ __('Usuários') }}</a>
                                     </li>
                                 @endif
 
@@ -81,5 +81,7 @@
             @yield('content')
         </main>
     </div>
+
+    @include('sweetalert::alert')
 </body>
 </html>
