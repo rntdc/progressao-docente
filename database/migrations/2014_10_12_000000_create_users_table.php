@@ -17,7 +17,15 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->boolean('type')->default(false); //add type boolean Users: 1=>Admin, 2=>Manager
+            $table->string('type', 100)->default('null');
+            $table->string('level', 100)->nullable();
+            $table->string('class', 100)->nullable();
+            $table->string('form', 100)->nullable();
+            $table->string('situation', 100)->nullable();
+            $table->integer('siape')->nullable();
+            $table->datetime('entry_date')->nullable();
+            $table->datetime('last_progression_date')->nullable();
+            $table->boolean('is_verified')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

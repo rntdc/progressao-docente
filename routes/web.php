@@ -29,19 +29,16 @@ Route::middleware(['auth', 'user-access:0'])->group(function () {
 });
 
 //Admin Routes List
-Route::middleware(['auth', 'user-access:1'])->group(function () {
+Route::middleware(['auth', 'user-access:App\Models\Admin'])->group(function () {
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
 
     Route::get('/admin/professors', [UsersController::class, 'index'])->name('admin.professors.index');
     Route::get('/admin/professors/create', [UsersController::class, 'create'])->name('admin.professors.create');
     Route::post('/admin/professors/create', [UsersController::class, 'store'])->name('admin.professors.store');
-
-
-
 });
 
-//Admin Routes List
-Route::middleware(['auth', 'user-access:2'])->group(function () {
+//Manager Routes List
+Route::middleware(['auth', 'user-access:App\Models\Manager'])->group(function () {
     Route::get('/manager/home', [HomeController::class, 'managerHome'])->name('manager.home');
 });
 

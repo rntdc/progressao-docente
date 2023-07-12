@@ -21,7 +21,6 @@ class UserAccess
             return $next($request);
         }
 
-
         return response()->json([
             'message' => 'You do not have permission to access for this page.',
         ]);
