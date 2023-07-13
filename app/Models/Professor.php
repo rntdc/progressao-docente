@@ -2,15 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Auth\Authenticatable as AuthenticatableTrait;
-
 class Professor extends User
 {
-    use AuthenticatableTrait;
-    use HasFactory;
-
     protected $fillable = [
         'level',
         'class',

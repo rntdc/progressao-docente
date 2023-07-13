@@ -46,7 +46,7 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                @if(Auth::user()->type == 1)
+                                @if(Auth::user()->type == "App\Models\Admin")
                                     <li class="nav-item">
                                         <a class="nav-link" href="">{{ __('Solicitações') }}</a>
                                     </li>

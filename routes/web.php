@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Admin\UsersController;
+
+use App\Http\Controllers\Admin\ProfessorsController;
 
 
 /*
@@ -30,11 +31,18 @@ Route::middleware(['auth', 'user-access:0'])->group(function () {
 
 //Admin Routes List
 Route::middleware(['auth', 'user-access:App\Models\Admin'])->group(function () {
-    Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
+    Route::get('admin/home', [HomeController::class, 'adminHome'])->name('admin.home');
 
-    Route::get('/admin/professors', [UsersController::class, 'index'])->name('admin.professors.index');
-    Route::get('/admin/professors/create', [UsersController::class, 'create'])->name('admin.professors.create');
-    Route::post('/admin/professors/create', [UsersController::class, 'store'])->name('admin.professors.store');
+    Route::resource('admin/professors', ProfessorsController::class)
+        ->except(['show'])
+        ->names([
+            'index' => 'admin.professors.index',
+            'create' => 'admin.professors.create',
+            'store' => 'admin.professors.store',
+            'edit' => 'admin.professors.edit',
+            'update' => 'admin.professors.update',
+            'destroy' => 'admin.professors.destroy',
+        ]);
 });
 
 //Manager Routes List
