@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\Admin\ProfessorsController;
+use App\Http\Controllers\Admin\ManagersController;
+
 
 
 /*
@@ -43,6 +45,17 @@ Route::middleware(['auth', 'user-access:App\Models\Admin'])->group(function () {
             'update' => 'admin.professors.update',
             'destroy' => 'admin.professors.destroy',
         ]);
+
+    Route::resource('admin/managers', ManagersController::class)
+        ->except(['show'])
+        ->names([
+        'index' => 'admin.managers.index',
+        'create' => 'admin.managers.create',
+        'store' => 'admin.managers.store',
+        'edit' => 'admin.managers.edit',
+        'update' => 'admin.managers.update',
+        'destroy' => 'admin.managers.destroy',
+    ]);
 });
 
 //Manager Routes List

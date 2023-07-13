@@ -6,7 +6,7 @@
     <div class="container-fluid px-4">
         <h1 class="mt-4">Editar Professor</h1>
         <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.professors.index') }}">Dashboard</a></li>
             <li class="breadcrumb-item active">Cadastro</li>
         </ol>
   </button>
