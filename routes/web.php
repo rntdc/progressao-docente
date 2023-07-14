@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 
 use App\Http\Controllers\Admin\ProfessorsController;
 use App\Http\Controllers\Admin\ManagersController;
+use App\Http\Controllers\Admin\CalendarController;
 
 
 
@@ -55,6 +56,17 @@ Route::middleware(['auth', 'user-access:App\Models\Admin'])->group(function () {
         'edit' => 'admin.managers.edit',
         'update' => 'admin.managers.update',
         'destroy' => 'admin.managers.destroy',
+    ]);
+
+    Route::resource('admin/calendars', CalendarController::class)
+        ->except(['show'])
+        ->names([
+        'index' => 'admin.calendars.index',
+        'create' => 'admin.calendars.create',
+        'store' => 'admin.calendars.store',
+        'edit' => 'admin.calendars.edit',
+        'update' => 'admin.calendars.update',
+        'destroy' => 'admin.calendars.destroy',
     ]);
 });
 

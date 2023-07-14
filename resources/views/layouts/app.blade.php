@@ -51,10 +51,13 @@
                                         <a class="nav-link" href="">{{ __('Solicitações') }}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('admin.professors.index') }}">{{ __('Usuários') }}</a>
+                                        <a class="nav-link" href="{{ route('admin.professors.index') }}">{{ __('Professores') }}</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('admin.managers.index') }}">{{ __('Managers') }}</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('admin.calendars.index') }}">{{ __('Calendário') }}</a>
                                     </li>
                                 @endif
 

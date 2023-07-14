@@ -12,7 +12,7 @@ use App\Http\Requests\ManagerUpdateRequest;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class managersController extends Controller
+class ManagersController extends Controller
 {
 
     /**
@@ -46,7 +46,7 @@ class managersController extends Controller
      *
      * @return Response
      */
-    public function store(managerstoreRequest $request)
+    public function store(ManagerStoreRequest $request)
     {
         $validated = $request->validated();
 
