@@ -61,7 +61,7 @@ class CalendarController extends Controller
         $calendar->save();
 
 
-        Alert::toast('Calendar cadastrado com sucesso!', 'success');
+        Alert::toast('Data cadastrada com sucesso!', 'success');
 
         return redirect(route('admin.calendars.create'));
     }
@@ -106,7 +106,7 @@ class CalendarController extends Controller
 
         $item->update();
 
-        Alert::toast('Calendar editado com sucesso!', 'success');
+        Alert::toast('Data editada com sucesso!', 'success');
 
         return redirect(route('admin.calendars.index'));
     }
@@ -114,14 +114,24 @@ class CalendarController extends Controller
     /**
 	 * Remove.
 	 *
-	 * @param  Calendar $calendar
+	 * @param  Request $request
 	 * @return Response
 	 */
-    public function destroy(Calendar $calendar)
+    public function destroy(Request $request)
     {
-        $item = Calendar::findOrFail($calendar->id);
-        $item->delete();
+        if($request->ajax()){
+            try {
+                $item = Calendar::findOrFail($request->item_id);
 
-        return redirect(route('admin.calendars.index'));
+                $item->delete();
+
+                return response()->json(['message' => 'Sucesso na exclusão']);
+            } catch (\Exception $e) {
+                // Log the exception
+                Log::error($e->getMessage());
+
+                return response()->json(['error' => 'Ocorreu um erro, tente novamente mais tarde.'], 500);
+            }
+        }
     }
 }

@@ -44,10 +44,10 @@
                             <td class="align-middle">{{ $item->name }}</td>
                             <td class="align-middle">{{ $item->email }}</td>
                             <td class="align-middle">
-                                @if($item->is_active)
-                                <span class="badge badge-success">Ativo</span>
+                                @if($item->is_verified)
+                                <span class="badge rounded-pill text-bg-primary">Verificado</span>
                                 @else
-                                <span class="badge badge-danger">Desativado</span>
+                                <span class="badge rounded-pill text-bg-danger mb-2">Aguardando</span>
                                 @endif
                             </td>
                             <td class="align-middle">

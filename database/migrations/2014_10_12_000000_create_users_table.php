@@ -26,7 +26,8 @@ return new class extends Migration
             $table->datetime('entry_date')->nullable();
             $table->datetime('last_progression_date')->nullable();
             $table->boolean('is_verified')->default(false);
-            $table->rememberToken();
+            $table->date('date_of_birth'); // Add the date_of_birth column
+            $table->rememberToken()->nullable();
             $table->timestamps();
         });
     }

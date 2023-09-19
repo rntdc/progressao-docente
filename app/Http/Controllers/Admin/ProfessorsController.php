@@ -60,7 +60,8 @@ class ProfessorsController extends Controller
         $professor = new Professor();
         $professor->name = $request->input('name');
         $professor->email = $request->input('email');
-        $professor->password = bcrypt('12345678');
+        $professor->date_of_birth = $request->input('date_of_birth');
+        $professor->password = bcrypt(date('dmY', strtotime($request->input('date_of_birth'))));
         $professor->is_verified = false;
         $professor->setRememberToken(Str::random(60));
         $professor->save();
@@ -107,6 +108,12 @@ class ProfessorsController extends Controller
 
         $item->name = $request->input('name');
         $item->email = $request->input('email');
+
+        if($item->date_of_birth != $request->input('date_of_birth') && !$item->is_verified) {
+            $item->password = bcrypt(date('dmY', strtotime($request->input('date_of_birth'))));
+        }
+
+        $item->date_of_birth = $request->input('date_of_birth');
 
         $item->update();
 

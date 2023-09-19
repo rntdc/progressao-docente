@@ -32,6 +32,18 @@
                     </div>
                 </div>
 
+                <div class="form-group row mt-2">
+                    {!! Form::label('date_of_birth', 'Nascimento', ['class' => 'col-md-2 col-form-label text-sm-left']) !!}
+                    <div class="col-md-10">
+                        {!! Form::date('date_of_birth', $item->date_of_birth, ['class' => 'form-control', 'required' => true]) !!}
+                        @if($errors->has('date_of_birth'))
+                            @foreach($errors->get('date_of_birth') as $error)
+                                <span class="m-1 text-danger" style="font-size: 11px">{{ $error }}</span>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+
                 <div class="general-toolbar d-flex justify-content-end p-2">
                     <button type="submit" class="btn btn-default"><i class="fas fa-save"></i> Salvar</button>
                 </div>

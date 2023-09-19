@@ -32,30 +32,29 @@
                 <table id="myTable">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Verificado</th>
+                            <th>Semestre</th>
+                            <th>Inicio</th>
+                            <th>Fim</th>
                             <th width="20%"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($calendars as $item)
                         <tr>
-                            <td class="align-middle">{{ $item->name }}</td>
-                            <td class="align-middle">{{ $item->email }}</td>
-                            <td class="align-middle">
-                                @if($item->is_active)
-                                <span class="badge badge-success">Ativo</span>
-                                @else
-                                <span class="badge badge-danger">Desativado</span>
-                                @endif
-                            </td>
+                            <td class="align-middle">{{ $item->semester }}</td>
+                            <td class="align-middle">{{ \Carbon\Carbon::parse($item->start_date)->format('d/m/Y') }}</td>
+                            <td class="align-middle">{{ \Carbon\Carbon::parse($item->end_date)->format('d/m/Y') }}</td>
                             <td class="align-middle">
                                 <div class="btn-group btn-group-sm" role="group">
                                     <a href="{{ url(route('admin.calendars.edit', $item)) }}" class="btn btn-outline-secondary" data-toggle="tooltip" title="Editar">
                                         <i class="bi bi-pen"></i> Editar
                                     </a>
-                                    <a href="{{ route('admin.calendars.destroy', $item) }}" data-method="DELETE" class="btn btn-outline-danger" data-confirm-delete="true">
+                                    <a
+                                        data-url="{{ route('admin.calendars.destroy', $item) }}"
+                                        data-message="Deseja deletar o Semestre {{ $item->semester }}?"
+                                        data-item="{{ $item->id }}"
+                                        class="js-delete btn btn-outline-danger"
+                                    >
                                         <i class="bi bi-trash"></i> Deletar
                                     </a>
                                 </div>

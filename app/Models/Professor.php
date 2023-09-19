@@ -12,7 +12,6 @@ class Professor extends User
         'siape',
         'entry_date',
         'last_progression_date',
-        'is_verified',
     ];
 
     public static function boot()

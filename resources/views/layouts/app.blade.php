@@ -50,10 +50,10 @@
                             <li class="nav-item dropdown">
                                 @if(Auth::user()->type == "App\Models\Admin")
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('admin.items.index') }}">{{ __('Questões') }}</a>
+                                        <a class="nav-link disabled" href="">{{ __('Solicitações') }}</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="">{{ __('Solicitações') }}</a>
+                                        <a class="nav-link" href="{{ route('admin.items.index') }}">{{ __('Questões') }}</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('admin.professors.index') }}">{{ __('Professores') }}</a>
@@ -66,12 +66,8 @@
                                     </li>
                                 @endif
 
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
@@ -80,7 +76,7 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
-                                </div>
+                                </li>
                             </li>
                         @endguest
                     </ul>

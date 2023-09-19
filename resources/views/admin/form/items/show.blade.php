@@ -14,6 +14,11 @@
                 Cadastros dos índices das solicitações.
             </div>
         </div>
+        @if($item->has_subitem)
+            <span class="badge rounded-pill text-bg-primary mb-2">Subitens ativado</span>
+        @else
+            <span class="badge rounded-pill text-bg-danger mb-2">Subitens desativado</span>
+        @endif
         <div class="card mb-4">
             <div class="card-header">
                 <div class="row align-items-center">
@@ -122,8 +127,11 @@
                         <!-- question loop -->
                         @foreach($item->questions()->get() as $key => $question)
                         <div class="row mt-2">
-                            <div class="col-10 accordion-body name-questions">
+                            <div class="col-lg-9 col-md-8 col-sm-7 col-12 accordion-body name-questions">
                                 {{ $question->name }}
+                            </div>
+                            <div class="col-lg-1 col-md-2 col-sm-3 col-4 accordion-body name-questions">
+                                {{ $question->pontuation }}
                             </div>
                             <div class="col-2 buttons-questions">
                                 <a href="{{ url(route('admin.questions.edit', ['item' => $item, 'question' => $question])) }}"><button class="btn btn-outline-secondary"><i class="bi bi-pen"></i></button></a>
