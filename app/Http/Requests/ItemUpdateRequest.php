@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class ManagerStoreRequest extends FormRequest
+class ItemUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,6 @@ class ManagerStoreRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'email' => 'required|unique:users|max:255',
         ];
 
     }
@@ -39,9 +38,6 @@ class ManagerStoreRequest extends FormRequest
         return [
             'name.required'  => 'O campo nome é obrigatório.',
             'name.max'       => 'Limite de caracteres atingido.',
-            'email.required' => 'O email é obrigatório.',
-            'email.max'      => 'Limite de caracteres atingido.',
-            'email.unique'   => 'O email já está cadastrado.',
         ];
     }
 }

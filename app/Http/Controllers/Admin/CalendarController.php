@@ -10,6 +10,7 @@ use App\Http\Requests\CalendarRequest;
 
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Log;
 
 class CalendarController extends Controller
 {
@@ -22,8 +23,6 @@ class CalendarController extends Controller
     public function index()
     {
         $calendars = Calendar::all();
-
-        confirmDelete('Exclusão!', 'Tem certeza que deseja deletar esse calendar?');
 
         return view('admin.calendars.index', compact('calendars'));
     }

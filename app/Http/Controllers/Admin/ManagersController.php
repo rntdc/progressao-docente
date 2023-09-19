@@ -11,6 +11,7 @@ use App\Http\Requests\ManagerUpdateRequest;
 
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Log;
 
 class ManagersController extends Controller
 {
@@ -23,8 +24,6 @@ class ManagersController extends Controller
     public function index()
     {
         $managers = Manager::all();
-
-        confirmDelete('Exclusão!', 'Tem certeza que deseja deletar esse manager?');
 
         return view('admin.managers.index', compact('managers'));
     }
@@ -117,14 +116,24 @@ class ManagersController extends Controller
     /**
 	 * Remove.
 	 *
-	 * @param  Manager $manager
+	 * @param  Request $request
 	 * @return Response
 	 */
-    public function destroy(Manager $manager)
+    public function destroy(Request $request)
     {
-        $item = Manager::findOrFail($manager->id);
-        $item->delete();
+        if($request->ajax()){
+            try {
+                $item = Manager::findOrFail($request->item_id);
 
-        return redirect(route('admin.managers.index'));
+                $item->delete();
+
+                return response()->json(['message' => 'Sucesso na exclusão']);
+            } catch (\Exception $e) {
+                // Log the exception
+                Log::error($e->getMessage());
+
+                return response()->json(['error' => 'Ocorreu um erro, tente novamente mais tarde.'], 500);
+            }
+        }
     }
 }

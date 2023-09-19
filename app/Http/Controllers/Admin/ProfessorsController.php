@@ -11,6 +11,7 @@ use App\Http\Requests\ProfessorUpdateRequest;
 
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Log;
 
 class ProfessorsController extends Controller
 {
@@ -117,14 +118,24 @@ class ProfessorsController extends Controller
     /**
 	 * Remove.
 	 *
-	 * @param  Professor $professor
+	 * @param  Request $request
 	 * @return Response
 	 */
-    public function destroy(Professor $professor)
+    public function destroy(Request $request)
     {
-        $item = Professor::findOrFail($professor->id);
-        $item->delete();
+        if($request->ajax()){
+            try {
+                $item = Professor::findOrFail($request->item_id);
 
-        return redirect(route('admin.professors.index'));
+                $item->delete();
+
+                return response()->json(['message' => 'Sucesso na exclusão']);
+            } catch (\Exception $e) {
+                // Log the exception
+                Log::error($e->getMessage());
+
+                return response()->json(['error' => 'Ocorreu um erro, tente novamente mais tarde.'], 500);
+            }
+        }
     }
 }

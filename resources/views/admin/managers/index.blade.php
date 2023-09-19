@@ -55,7 +55,12 @@
                                     <a href="{{ url(route('admin.managers.edit', $item)) }}" class="btn btn-outline-secondary" data-toggle="tooltip" title="Editar">
                                         <i class="bi bi-pen"></i> Editar
                                     </a>
-                                    <a href="{{ route('admin.managers.destroy', $item) }}" data-method="DELETE" class="btn btn-outline-danger" data-confirm-delete="true">
+                                    <a
+                                        data-url="{{ route('admin.managers.destroy', $item) }}"
+                                        data-message="Deseja deletar o Manager {{ $item->name }}?"
+                                        data-item="{{ $item->id }}"
+                                        class="js-delete btn btn-outline-danger"
+                                    >
                                         <i class="bi bi-trash"></i> Deletar
                                     </a>
                                 </div>
