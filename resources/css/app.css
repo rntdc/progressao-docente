@@ -1,3 +1,40 @@
+.form-index-div {
+    text-align: -webkit-center;
+}
+
+.index-instructions {
+    width: 80%;
+    min-height: 130px;
+    background-color: rgba(18, 20, 21, 0.03);
+    border: solid 0px #0fce3fa2;
+    border-radius: 6px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.2s; /* Add smooth transition for the return animation */
+    transition-timing-function: linear;
+}
+
+.index-instructions i {
+    font-size: 30px;
+    color: rgba(15, 206, 63, 0.6352941176);
+}
+
+.index-instructions:hover {
+    width: 82%;
+    min-height: 135px;
+    border: solid 2px #0fce3fa2;
+}
+
+.icon-system {
+    vertical-align: middle;
+}
+
+.title {
+    text-align: center;
+}
+
+
+
 .card-body-items-index {
     text-align: -webkit-center;
 }
@@ -26,7 +63,7 @@
     font-style: italic;
 }
 
-.teste {
+.card-with-animation {
     width: 80%;
     min-height: 130px;
     background-color: rgba(18, 20, 21, 0.03);
@@ -38,11 +75,11 @@
     transition-timing-function: linear;
 }
 
-.teste i {
+.card-with-animation i {
     font-size: 30px;
 }
 
-.teste:hover {
+.card-with-animation:hover {
     width: 82%;
     min-height: 135px;
     border: solid 2px #0fce3fa2;
@@ -55,6 +92,6 @@
     }
     100% {
         width: 82%;
-        min-height: 135px;
+        min-height: 132px;
     }
 }

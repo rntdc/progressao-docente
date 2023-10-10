@@ -25,11 +25,7 @@ use App\Http\Controllers\Admin\QuestionsController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 Auth::routes();
-
 
 Route::middleware(['verified'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');

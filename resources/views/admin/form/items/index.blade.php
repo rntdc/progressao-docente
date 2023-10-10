@@ -30,7 +30,7 @@
             <div class="card-body card-body-items-index">
                 @foreach($items as $item)
                     <a href="{{ route('admin.items.show', $item) }}" style="text-decoration: none; color: black;">
-                        <div class="teste m-4 row">
+                        <div class="card-with-animation m-4 row">
                             <div class="col-10 d-flex align-items-center">
                                 <h4>{{ $item->name }}</h4>
                             </div>

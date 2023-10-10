@@ -1,70 +1,69 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+<div class="container mt-5">
+    <div class="div-centralizada row">
+        <div class="form-index-div col-sm-12 col-md-6">
+            <div class="m-3 title row">
+                <h4>BEM VINDO A</h4>
+                <h2>Progressão Docente</h2>
+            </div>
+            <div class="col-12 col-md-8">
+                <form class="form-index-login" method="POST" action="{{ route('login') }}">
+				@csrf
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">@</span>
+                        </div>
+                        <input required name="email" type="email" class="form-control @if(Session::has('error')) is-invalid @endif" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
+                    </div>
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
+                    <div class="form-group mt-3 mb-2">
+                        <input required name="password" type="password" class="form-control @if(Session::has('error')) is-invalid @endif" id="formGroupExampleInput2" placeholder="Senha">
+                    </div>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                    <div class="form-group mt-3">
+                        <button type="submit" class="btn btn-primary ">Entrar</button>
+                    </div>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                    @if(Session::has('error'))
+                    <div class="form-group mt-3">
+                        <span class="mt-3 text-danger" style="font-size: 14px">{{ Session::get('error') }}</span>
+                    </div>
+                    @endif
+
+                </form>
+            </div>
+
+        </div>
+
+        <div class="number-two col-sm-12 col-md-6 row">
+            <div class="col-12">
+                <div class="card-body card-body-items-index">
+                    <a href="" style="text-decoration: none; color: black;">
+                        <div class="index-instructions m-4 row">
+                            <div>
+                                <h4><i class="bi bi-book icon-system"></i> Sistema</h4>
+                            </div>
+                            <div class="col-12 ">
+                                <p>Uma maneira de simplificação do fluxo para fornecer suporte aos docentes do IFRS durante o processo de solicitação de progressão, com o intuito de minimizar erros de preenchimento e agilizar a avaliação de desempenho.</p>
                             </div>
                         </div>
+                    </a>
+                </div>
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Senha') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                <div class="card-body card-body-items-index">
+                    <a href="" style="text-decoration: none; color: black;">
+                        <div class="index-instructions m-4 row">
+                            <div>
+                                <h4><i class="bi bi-question-circle icon-system"></i> Acesso</h4>
+                            </div>
+                            <div class="col-12 ">
+                                <p>Uma maneira de simplificação do fluxo para fornecer suporte aos docentes do IFRS durante o processo de solicitação de progressão, com o intuito de minimizar erros de preenchimento e agilizar a avaliação de desempenho.</p>
                             </div>
                         </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Lembrar') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Recuperar Senha') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+                    </a>
                 </div>
             </div>
         </div>
