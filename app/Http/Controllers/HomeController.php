@@ -21,9 +21,17 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function home()
     {
-        return view('index');
+        $userType = auth()->user()->type;
+
+        if ($userType === 'App\Models\Admin') {
+            return redirect()->route('admin.home');
+        } elseif ($userType === 'App\Models\Manager') {
+            return redirect()->route('admin.manager');
+        }
+
+        return view('home');
     }
 
     /**

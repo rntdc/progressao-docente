@@ -28,10 +28,10 @@ use App\Http\Controllers\Admin\QuestionsController;
 Auth::routes();
 
 Route::middleware(['verified'])->group(function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/', [HomeController::class, 'home'])->name('home');
 
     //Normal Users Routes List
-    Route::middleware(['auth', 'user-access:0'])->group(function () {
+    Route::middleware(['auth', 'user-access:App\Models\Professor'])->group(function () {
 
     });
 
