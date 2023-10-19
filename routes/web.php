@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfessorController;
 
 use App\Http\Controllers\Admin\ProfessorsController;
 use App\Http\Controllers\Admin\ManagersController;
@@ -32,7 +33,9 @@ Route::middleware(['verified'])->group(function () {
 
     //Normal Users Routes List
     Route::middleware(['auth', 'user-access:App\Models\Professor'])->group(function () {
-
+        Route::get('/perfil', [ProfessorController::class, 'profile'])->name('profile');
+        Route::get('/perfil/edit', [ProfessorController::class, 'edit'])->name('profile.edit');
+        Route::post('/perfil/edit', [ProfessorController::class, 'update'])->name('profile.update');
     });
 
     //Admin Routes List
