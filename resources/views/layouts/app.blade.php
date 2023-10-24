@@ -66,6 +66,12 @@
                                     </li>
                                 @endif
 
+                                @if(Auth::user()->type == "App\Models\Professor")
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('profile') }}">{{ __('Perfil') }}</a>
+                                    </li>
+                                @endif
+
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
