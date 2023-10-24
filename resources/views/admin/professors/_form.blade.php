@@ -9,7 +9,7 @@
             <div class="card-body">
 
                 <div class="form-group row">
-                    {!! Form::label('name', 'Nome', ['class' => 'col-md-2 col-form-label text-sm-left']) !!}
+                    {!! Form::label('name', 'Nome *', ['class' => 'col-md-2 col-form-label text-sm-left']) !!}
                     <div class="col-md-10">
                         {!! Form::text('name', $item->name, ['class' => 'form-control', 'placeholder' => 'Nome', 'required' => true]) !!}
                         @if($errors->has('name'))
@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="form-group row mt-2">
-                    {!! Form::label('email', 'Email', ['class' => 'col-md-2 col-form-label text-sm-left']) !!}
+                    {!! Form::label('email', 'Email *', ['class' => 'col-md-2 col-form-label text-sm-left']) !!}
                     <div class="col-md-10">
                         {!! Form::text('email', $item->email, ['class' => 'form-control', 'placeholder' => 'Email', 'required' => true]) !!}
                         @if($errors->has('email'))
@@ -32,12 +32,26 @@
                     </div>
                 </div>
 
-                <div class="form-group row mt-2">
-                    {!! Form::label('date_of_birth', 'Nascimento', ['class' => 'col-md-2 col-form-label text-sm-left']) !!}
+                <div class="form-group row mt-2 mb-5">
+                    {!! Form::label('date_of_birth', 'Nascimento *', ['class' => 'col-md-2 col-form-label text-sm-left']) !!}
                     <div class="col-md-10">
                         {!! Form::date('date_of_birth', $item->date_of_birth, ['class' => 'form-control', 'required' => true]) !!}
                         @if($errors->has('date_of_birth'))
                             @foreach($errors->get('date_of_birth') as $error)
+                                <span class="m-1 text-danger" style="font-size: 11px">{{ $error }}</span>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="form-group row mt-5">
+                    {!! Form::label('last_progression_date', 'Data da última progressão', ['class' => 'col-md-3 col-form-label text-sm-left']) !!}
+                    <div class="col-md-9">
+                        {!! Form::date('last_progression_date', $item->last_progression_date, ['class' => 'form-control', 'required' => false]) !!}
+                        @if($errors->has('last_progression_date'))
+                            @foreach($errors->get('last_progression_date') as $error)
                                 <span class="m-1 text-danger" style="font-size: 11px">{{ $error }}</span>
                             @endforeach
                         @endif

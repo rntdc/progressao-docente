@@ -61,6 +61,7 @@ class ProfessorsController extends Controller
         $professor->name = $request->input('name');
         $professor->email = $request->input('email');
         $professor->date_of_birth = $request->input('date_of_birth');
+        $professor->last_progression_date = $request->input('last_progression_date');
         $professor->password = bcrypt(date('dmY', strtotime($request->input('date_of_birth'))));
         $professor->is_verified = false;
         $professor->setRememberToken(Str::random(60));
@@ -114,6 +115,7 @@ class ProfessorsController extends Controller
         }
 
         $item->date_of_birth = $request->input('date_of_birth');
+        $item->last_progression_date = $request->input('last_progression_date');
 
         $item->update();
 
