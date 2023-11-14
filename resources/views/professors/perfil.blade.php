@@ -7,7 +7,7 @@
         <h1 class="mt-4">Dados</h1>
             <div class="row justify-content-center mt-3">
                 <div class="col-md-9">
-                    <div class="card">
+                    <div class="card mt-5">
                         <div class="card-header d-flex justify-content-between align-items-center">
                         {{ __('Perfil') }}
                         <a href="{{ route('profile.edit') }}" class="btn btn-outline-secondary" data-toggle="tooltip" title="Editar">

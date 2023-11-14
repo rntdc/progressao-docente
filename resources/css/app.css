@@ -1,3 +1,45 @@
+/* start form request */
+
+.doc-body {
+    margin: 60px;
+    border: 2px solid #303030;
+}
+
+.doc-title {
+    margin: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    font: menu;
+}
+
+.doc-info-item {
+    margin: 10px 10px 14px 50px;
+    font-size: 17px;
+}
+
+.doc-info-signature {
+    margin: 10px 50px 14px 10px;
+    text-align-last: right;
+}
+
+.doc-info-signature .signature{
+    display: block;
+}
+
+
+
+
+
+.signature-field{
+    display: block;
+    text-align-last: right;
+}
+
+/* end form re quest */
+.response {
+    text-decoration: underline;
+}
+
 .form-index-div {
     text-align: -webkit-center;
 }

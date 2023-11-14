@@ -23,7 +23,8 @@ class HomeController extends Controller
      */
     public function home()
     {
-        $userType = auth()->user()->type;
+        $user = auth()->user();
+        $userType = $user->type;
 
         if ($userType === 'App\Models\Admin') {
             return redirect()->route('admin.home');
@@ -31,7 +32,7 @@ class HomeController extends Controller
             return redirect()->route('admin.manager');
         }
 
-        return view('home');
+        return view('home', compact('user'));
     }
 
     /**
