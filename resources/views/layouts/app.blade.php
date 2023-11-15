@@ -56,6 +56,9 @@
                                         <a class="nav-link" href="{{ route('admin.items.index') }}">{{ __('Questões') }}</a>
                                     </li>
                                     <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('admin.enviroments.index') }}">{{ __('Variáveis') }}</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link" href="{{ route('admin.professors.index') }}">{{ __('Professores') }}</a>
                                     </li>
                                     <li class="nav-item">

@@ -8,6 +8,7 @@ use App\Http\Controllers\FormController;
 use App\Http\Controllers\Admin\ProfessorsController;
 use App\Http\Controllers\Admin\ManagersController;
 use App\Http\Controllers\Admin\CalendarController;
+use App\Http\Controllers\Admin\EnviromentController;
 use App\Http\Controllers\Admin\ItemsController;
 use App\Http\Controllers\Admin\SubItemsController;
 use App\Http\Controllers\Admin\QuestionsController;
@@ -79,6 +80,9 @@ Route::middleware(['verified'])->group(function () {
             'destroy' => 'admin.calendars.destroy',
         ]);
 
+        Route::get('/admin/enviroments/index', [EnviromentController::class, 'index'])->name('admin.enviroments.index');
+        Route::get('/admin/enviroments/edit', [EnviromentController::class, 'edit'])->name('admin.enviroments.edit');
+        Route::put('/admin/enviroments/{enviroment}/update', [EnviromentController::class, 'update'])->name('admin.enviroments.update');
 
         //Form routes
         Route::resource('admin/forms/items', ItemsController::class)

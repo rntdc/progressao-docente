@@ -89,7 +89,7 @@ class CalendarController extends Controller
 	 * @param  int  $id
 	 * @return Response
 	 */
-    public function update(ManagerUpdateRequest $request, $id)
+    public function update(CalendarUpdateRequest $request, $id)
     {
         $validated = $request->validated();
 
