@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
 use Smalot\PdfParser\Parser;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 class PdfController extends Controller
 {
@@ -17,7 +19,31 @@ class PdfController extends Controller
 
     public function index()
     {
-        return view('pdf');
+        // Obtém o conteúdo do arquivo
+        $conteudoDoArquivo = Storage::get('public/SIA.pdf');
+
+        // Cria um arquivo temporário
+        $tempFile = tempnam(sys_get_temp_dir(), 'temp_pdf');
+        file_put_contents($tempFile, $conteudoDoArquivo);
+
+        // Cria uma instância de UploadedFile
+        $uploadedFile = new \Illuminate\Http\UploadedFile(
+            $tempFile,
+            'SIA.pdf',
+            mime_content_type($tempFile),
+            null,
+            true
+        );
+
+        // Cria uma instância de Request e adiciona o arquivo
+        $request = new Request();
+        $request->files->add(['pdf' => $uploadedFile]);
+
+        // Chama a função extractData com a instância da Request
+        $this->extractData($request);
+
+        // Retorna a view ou realiza outras operações, se necessário
+        // return view('pdf');
     }
 
     public function extractData(Request $request)
@@ -35,7 +61,7 @@ class PdfController extends Controller
         print("<pre>".print_r($data,true)."</pre>");
 
         $sumHours = [];
-
+/*
         foreach ($data as $item) {
             if (isset($sumHours[$item['semester']])) {
                 $sumHours[$item['semester']] += $item['hours'];
@@ -45,7 +71,7 @@ class PdfController extends Controller
         }
 
         return view('data')->with('sumHours', $sumHours);
-
+*/
 
     }
 
@@ -122,7 +148,35 @@ class PdfController extends Controller
             ];
         }
 
-        return $data;
+        $semestresDesejados = [];
+        $start = Carbon::create(2023, 1, 15);
+
+        // Armazenar uma cópia da data inicial
+        $dataInicial = $start->copy();
+
+        // Loop para criar o array de semestres desejados
+        for (; $dataInicial->copy()->subYears(2) <= $start; $start->subMonths(6)) {
+            array_push($semestresDesejados, $start->year . "/" . ceil($start->month / 6));
+        }
+
+        // Inicializar um array para armazenar a soma das horas por semestre
+        $somaHorasPorSemestre = [];
+
+        // Iterar sobre os cursos
+        foreach ($data as $curso) {
+            // Verificar se o semestre está nos semestres desejados
+            if (in_array($curso['semester'], $semestresDesejados)) {
+                // Se o semestre já existir no array, adicionar as horas
+                if (isset($somaHorasPorSemestre[$curso['semester']])) {
+                    $somaHorasPorSemestre[$curso['semester']] += $curso['hours'];
+                } else {
+                    // Se não, inicializar as horas para o semestre
+                    $somaHorasPorSemestre[$curso['semester']] = $curso['hours'];
+                }
+            }
+        }
+
+        return $somaHorasPorSemestre;
     }
 
     public function extractDataPdfSigaa($text)
