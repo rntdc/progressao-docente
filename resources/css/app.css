@@ -1,5 +1,30 @@
 /* start form request */
 
+/* TABLE */
+
+.custom-file-upload {
+    text-align: center;
+}
+
+.custom-file-upload input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload label {
+    background-color: #3498db;
+    color: #fff;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.table tr {
+    vertical-align: middle;
+}
+
+
+/* END TABLE */
+
 .doc-body {
     margin: 60px;
     border: 2px solid #303030;
@@ -26,16 +51,7 @@
     display: block;
 }
 
-
-
-
-
-.signature-field{
-    display: block;
-    text-align-last: right;
-}
-
-/* end form re quest */
+/* end form request */
 .response {
     text-decoration: underline;
 }

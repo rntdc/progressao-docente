@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
-
 use Smalot\PdfParser\Parser;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+
+use App\Models\Calendar;
 
 class PdfController extends Controller
 {
@@ -142,23 +143,48 @@ class PdfController extends Controller
             $data[] = [
                 'code' => $codigo,
                 'course' => $curso,
-                'ch1' => $ch1,
+                'expectation' => $ch1,
                 'hours' => $ch2,
                 'semester' => $anoSemestre,
             ];
         }
 
-        $semestresDesejados = [];
-        $start = Carbon::create(2023, 1, 15);
+        $semesters = Calendar::findSemestersBetween('2021-01-01', '2023-01-01');
+        $start = Carbon::parse('2021-01-01');
+        $end = Carbon::parse('2023-01-01');
+        $totalHours = 0;
 
-        // Armazenar uma cópia da data inicial
-        $dataInicial = $start->copy();
+        foreach ($semesters as $key => $semester) {
+            $semesterEnd = Carbon::parse($semester->end_date);
+            $semesterStart = Carbon::parse($semester->start_date);
+            $semesterToFilter = $semester->semester;
 
-        // Loop para criar o array de semestres desejados
-        for (; $dataInicial->copy()->subYears(2) <= $start; $start->subMonths(6)) {
-            array_push($semestresDesejados, $start->year . "/" . ceil($start->month / 6));
+            $proportion = 1;
+
+            if($key == 0 and $semesterStart->lessThanOrEqualTo($start)) {
+                // logica: (start - semester->endDate) / 20
+                $proportion = min(1, $start->diffInWeeks($semesterEnd) / 20);
+            }
+
+            if($key == count($semesters) - 1 and $semesterEnd->greaterThanOrEqualTo($end)) {
+                // logica: (end - semester->startDate) / 20
+                $proportion = min(1, $start->diffInWeeks($semesterStart) / 20);
+            }
+
+            $filteredData = array_filter($data, function ($curso) use ($semesterToFilter) {
+                return $curso['semester'] == $semesterToFilter;
+            });
+
+            $sumHours = array_sum(array_column($filteredData, 'hours')) * $proportion;
+            $totalHours += $sumHours;
+
+            echo"<pre>";
+            echo $semester->semester . " {$sumHours} <-> {$proportion} <br>";
+            echo"</pre>";
         }
 
+        echo $totalHours;
+        $semestresDesejados = [];
         // Inicializar um array para armazenar a soma das horas por semestre
         $somaHorasPorSemestre = [];
 

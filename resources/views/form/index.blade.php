@@ -13,7 +13,7 @@
         <form action="" method="post" id="myForm">
         @csrf
             <!-- first step -->
-            <div class="step" data-step="1">
+            <div class="step" data-step="4">
                 <h4 class="card-header">
                 Formulário do Servidor
                 </h4>
@@ -390,7 +390,7 @@
             </div>
 
             <!-- fourth step -->
-            <div class="step" data-step="4">
+            <div class="step" data-step="1">
                 <h4 class="card-header">
                     Documento 4
                 </h4>
@@ -399,8 +399,8 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Index</th>
                             <th>Questão</th>
+                            <th>Valor</th>
                             <th>Pontuação</th>
                             <th>Documento</th>
                             <th>Resultado</th>
@@ -409,11 +409,18 @@
                     <tbody>
                         @foreach($questions as $k => $question)
                         <tr>
-                            <td>{{$question->index}}</td>
                             <td>{{$question->name}}</td>
+                            <td>
+                                <div class="custom-file-upload">
+                                    <input type="number" name="document_{{$k}}" id="file-value" name="value" />
+                                </div>
+                            </td>
                             <td>{{$question->pontuation}}</td>
                             <td>
-                                <input type="file" name="document_{{$k}}">
+                                <div class="custom-file-upload">
+                                    <label for="file-upload"><i class="bi bi-file-earmark-arrow-up"></i></label>
+                                    <input type="file" name="document_{{$k}}" id="file-upload" />
+                                </div>
                             </td>
                             <td></td>
                         </tr>
