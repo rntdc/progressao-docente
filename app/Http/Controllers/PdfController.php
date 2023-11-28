@@ -21,7 +21,7 @@ class PdfController extends Controller
     public function index()
     {
         // Obtém o conteúdo do arquivo
-        $conteudoDoArquivo = Storage::get('public/SIA.pdf');
+        $conteudoDoArquivo = Storage::get('public/SIGAA.pdf');
 
         // Cria um arquivo temporário
         $tempFile = tempnam(sys_get_temp_dir(), 'temp_pdf');
@@ -207,34 +207,38 @@ class PdfController extends Controller
 
     public function extractDataPdfSigaa($text)
     {
-        // Definir o padrão de expressão regular para extrair as linhas com dados numéricos
-        $pattern = '/(\d+\.\d+)\tNível\t\n((?:.+\t.+\t)+)/m';
-        // Encontrar todas as correspondências no texto extraído do PDF
-        preg_match_all($pattern, $text, $matches, PREG_SET_ORDER, 0);
+        $phrasesToRemove = [
+            "/Portal do Docente.*?1050154, ministrou nesta instituição os seguintes componentes curriculares.*?letivos:/s",
+            "/Porto Alegre,.*?Código de Verificação.*?Copyright ©.*?IFRS.*?sigprod-M4-host.inst1/s",
+            "/Nível/s"
+        ];
 
-        $data = [];
-
-        foreach ($matches as $match) {
-            $semester = $match[1];
-            $courses = explode("\n", trim($match[2]));
-
-            foreach ($courses as $course) {
-                //course data esta captando como indice 0 o nome do curso + horas e, como indice 1, o tipo do curso
-                $courseData = explode("\t", $course);
-
-                $courseName = $courseData[0];
-                $hours = preg_replace("/[^0-9]/", "", $courseData[0]);
-                $type = $courseData[1];
-
-                $data[] = [
-                    'semester' => $semester,
-                    'course' => $courseName,
-                    'hours' => $hours,
-                    'type' => $type,
-                ];
-            }
+        foreach ($phrasesToRemove as $regex) {
+            $text = preg_replace($regex, '', $text);
         }
-        return $data;
-    }
 
+        preg_match_all('/(\d{4}\.\d)/', $text, $matches, PREG_OFFSET_CAPTURE);
+        $result = array();
+
+        foreach ($matches[0] as $index => $match) {
+            $semester = $match[0];
+            $pos = $match[1];
+
+            // Determine the text until the next semester (or until the end if it's the last semester)
+            $nextPos = isset($matches[0][$index + 1]) ? $matches[0][$index + 1][1] : strlen($text);
+            $length = $nextPos - $pos;
+
+            // Extract the text for the current semester
+            $semesterText = substr($text, $pos, $length);
+
+            preg_match_all('/(\d+)\s*h/', $semesterText, $hourMatches);
+
+            $sumHours = array_sum($hourMatches[1]);
+
+            $result[$semester] = $sumHours;
+        }
+
+        return $result;
+
+    }
 }
