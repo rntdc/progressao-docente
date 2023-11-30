@@ -113,26 +113,6 @@ class PdfController extends Controller
 
         $data = [];
 
-        /*
-        // Sera criada um objeto para cada semestre, no caso esse representa o de 2021 para testes
-        $semesterStart = Carbon::createFromFormat('d/m/Y', '13/03/2021');
-        $semesterEnd = Carbon::createFromFormat('d/m/Y', '21/07/2021');
-
-        $now = Carbon::now();
-        $past = Carbon::now()->subYears(2);
-
-        $start = $semesterStart->greaterThan($past) ? $semesterStart : $past;
-        $end = $semesterEnd->lessThan($now) ? $semesterEnd : $now;
-
-        $daysOverlap = $end->diffInDays($start) + 1;
-        $daysOverlap = max(0, $daysOverlap);
-
-        echo "Number of overlapping days: " . $daysOverlap . "<br>";;
-
-        echo $now . "<br>";
-        echo $past . "<br>";
-        */
-
         foreach ($matches as $match) {
             $curso = $match[2];
             $codigo = $match[3];
@@ -184,25 +164,6 @@ class PdfController extends Controller
         }
 
         echo $totalHours;
-        $semestresDesejados = [];
-        // Inicializar um array para armazenar a soma das horas por semestre
-        $somaHorasPorSemestre = [];
-
-        // Iterar sobre os cursos
-        foreach ($data as $curso) {
-            // Verificar se o semestre está nos semestres desejados
-            if (in_array($curso['semester'], $semestresDesejados)) {
-                // Se o semestre já existir no array, adicionar as horas
-                if (isset($somaHorasPorSemestre[$curso['semester']])) {
-                    $somaHorasPorSemestre[$curso['semester']] += $curso['hours'];
-                } else {
-                    // Se não, inicializar as horas para o semestre
-                    $somaHorasPorSemestre[$curso['semester']] = $curso['hours'];
-                }
-            }
-        }
-
-        return $somaHorasPorSemestre;
     }
 
     public function extractDataPdfSigaa($text)
@@ -222,6 +183,7 @@ class PdfController extends Controller
 
         foreach ($matches[0] as $index => $match) {
             $semester = $match[0];
+            $semester = str_replace('.', '/', $semester);
             $pos = $match[1];
 
             // Determine the text until the next semester (or until the end if it's the last semester)
@@ -237,6 +199,44 @@ class PdfController extends Controller
 
             $result[$semester] = $sumHours;
         }
+
+        $semesters = Calendar::findSemestersBetween('2021-01-01', '2023-01-01');
+        $start = Carbon::parse('2021-01-01');
+        $end = Carbon::parse('2023-01-01');
+        $totalHours = 0;
+
+        foreach ($semesters as $key => $semester) {
+            $semesterEnd = Carbon::parse($semester->end_date);
+            $semesterStart = Carbon::parse($semester->start_date);
+            $semesterToFilter = $semester->semester;
+
+            $proportion = 1;
+
+            if($key == 0 and $semesterStart->lessThanOrEqualTo($start)) {
+                // logica: (start - semester->endDate) / 20
+                $proportion = min(1, $start->diffInWeeks($semesterEnd) / 20);
+            }
+
+            if($key == count($semesters) - 1 and $semesterEnd->greaterThanOrEqualTo($end)) {
+                // logica: (end - semester->startDate) / 20
+                $proportion = min(1, $start->diffInWeeks($semesterStart) / 20);
+            }
+
+            $filteredData = array_filter($result, function ($key) use ($semesterToFilter) {
+                return $key == $semesterToFilter;
+            }, ARRAY_FILTER_USE_KEY);
+
+            // Output the filtered data
+            print_r($filteredData);
+
+            $sumHours = array_sum(array_column($filteredData, 'hours')) * $proportion;
+            $totalHours += $sumHours;
+
+            echo"<pre>";
+            echo $semester->semester . " {$sumHours} <-> {$proportion} <br>";
+            echo"</pre>";
+        }
+
 
         return $result;
 
